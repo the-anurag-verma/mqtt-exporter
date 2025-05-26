@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mqtt_exporter:
+    image: mqtt_exporter
+    build: .
+    container_name: mqtt_exporter
+    network_mode: host            # needed for your LAN broker access
+    environment:
+      - MQTT_HOST=${mqtt_host}
+      - MQTT_PORT=8883
+      - MQTT_USERNAME=${mqtt_user}
+      - MQTT_PASSWORD=${mqtt_password}
+      - MQTT_TOPIC=${mqtt_topic}
+      - MQTT_TLS=true
+      - MQTT_TLS_INSECURE=true
+      - EXPORTER_PORT=9438
+    volumes:
+      - ./mqtt_ca.crt:/ca.crt:ro
+    restart: always
+
